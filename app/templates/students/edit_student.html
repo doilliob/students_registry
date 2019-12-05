@@ -1,0 +1,210 @@
+{% extends 'base.html' %}
+
+{% block head %}
+  {{ super() }}
+  <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+  <link rel="stylesheet" href="/resources/demos/style.css">
+{% endblock %}
+
+
+{% block app_content %}
+    <br>
+    <br>
+    <div class="row">
+      <div class="col-1"></div>
+      <div class="col-10">
+      	<div align="center"> <h2>Сведения о студенте</h2> </div>
+        
+        {% if params['student_id'] is defined %}
+        <form method="POST" action="/students/update/{{params['student_id']}}">
+        {% else %}
+        <form method="POST" action="/students/add">
+        {% endif %}
+          <input type="hidden" name="csrf_token" value="{{ csrf_token() }}"/>
+          <hr />
+          <div class="form-group">
+            {{params['form'].group.label}}
+            {{params['form'].group(class="form-control", placeholder="Группа")}}
+            {% if params['form'].group.errors %}
+                <ul class="errors">{% for error in params['form'].group.errors %}<li><font color="red">{{ error }}</font></li>{% endfor %}</ul>
+            {% endif %}
+          </div>
+          
+          <hr />
+          <div align="center"> <h4>Общие сведения</h4></div>
+          <div class="form-group">
+            {{params['form'].lastname.label}}
+            {{params['form'].lastname(class="form-control", placeholder="Фамилия")}}
+          </div>
+          <div class="form-group">
+            {{params['form'].firstname.label}}
+            {{params['form'].firstname(class="form-control", placeholder="Имя")}}
+          </div>
+          <div class="form-group">
+            {{params['form'].middlename.label}}
+            {{params['form'].middlename(class="form-control", placeholder="Отчество")}}
+          </div>
+          <div class="form-group">
+            {{params['form'].gender_id.label}}
+            {{params['form'].gender_id(class="form-control")}}
+          </div>
+          <div class="form-group">
+            {{params['form'].birth_date.label}}
+            {{params['form'].birth_date(class="form-control", id="dt1")}}
+          </div>
+
+          <hr />
+          <div align="center"> <h4>Адрес фактического проживания</h4></div>
+          <div class="form-group">
+            {{params['form'].region_id.label}}
+            {{params['form'].region_id(class="form-control")}}
+          </div>
+          <div class="form-group">
+            {{params['form'].town_type_id.label}}
+            {{params['form'].town_type_id(class="form-control")}}
+          </div>
+          <div class="form-group">
+            {{params['form'].address.label}}
+            {{params['form'].address(class="form-control")}}
+          </div>
+          
+          <hr />
+          <div align="center"> <h4>Документ удостоверяющий личность</h4></div>
+          <div class="form-group">
+            {{params['form'].identity_document_type_id.label}}
+            {{params['form'].identity_document_type_id(class="form-control")}}
+          </div>
+          <div class="form-group">
+            {{params['form'].identity_document_series.label}}
+            {{params['form'].identity_document_series(class="form-control")}}
+          </div>
+          <div class="form-group">
+            {{params['form'].identity_document_number.label}}
+            {{params['form'].identity_document_number(class="form-control")}}
+          </div>
+          <div class="form-group">
+            {{params['form'].identity_document_date.label}}
+            {{params['form'].identity_document_date(class="form-control", id="dt2")}}
+          </div>
+          <div class="form-group">
+            {{params['form'].identity_document_organization.label}}
+            {{params['form'].identity_document_organization(class="form-control")}}
+          </div>
+          <div class="form-group">
+            {{params['form'].identity_document_dep_code.label}}
+            {{params['form'].identity_document_dep_code(class="form-control")}}
+          </div>
+          <div class="form-group">
+            {{params['form'].identity_document_birth_place.label}}
+            {{params['form'].identity_document_birth_place(class="form-control")}}
+          </div>
+          <div class="form-group">
+            {{params['form'].identity_document_address.label}}
+            {{params['form'].identity_document_address(class="form-control")}}
+          </div>
+          <div class="form-group">
+            {{params['form'].identity_document_nationality.label}}
+            {{params['form'].identity_document_nationality(class="form-control")}}
+          </div>
+
+          <hr />
+          <div align="center"> <h4>Документ об образовании</h4></div>
+          <div class="form-group">
+            {{params['form'].edoc_type.label}}
+            {{params['form'].edoc_type(class="form-control")}}
+          </div>
+          <div class="form-group">
+            {{params['form'].edoc_number.label}}
+            {{params['form'].edoc_number(class="form-control")}}
+          </div>
+          <div class="form-group">
+            {{params['form'].edoc_date.label}}
+            {{params['form'].edoc_date(class="form-control", id="dt3")}}
+          </div>
+          <div class="form-group">
+            {{params['form'].edoc_organization.label}}
+            {{params['form'].edoc_organization(class="form-control autocomplete")}}
+          </div>
+          <div class="form-group">
+            {{params['form'].edoc_gpa.label}}
+            {{params['form'].edoc_gpa(class="form-control")}}
+            {% if params['form'].edoc_gpa.errors %}
+                <ul class="errors">{% for error in params['form'].edoc_gpa.errors %}<li><font color="red">{{ error }}</font></li>{% endfor %}</ul>
+            {% endif %}
+          </div>
+
+          <hr />
+          <button type="submit" class="btn btn-primary">Сохранить</button>
+        </form>
+      </div>
+      <div class="col-1"></div>
+    </div>
+{% endblock %}
+
+{% block footer %}
+  {{ super() }}
+  <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
+  <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+  <script src="https://raw.githubusercontent.com/jquery/jquery-ui/master/ui/i18n/datepicker-ru.js"></script>
+  <script>
+    $( function() {
+      $.datepicker.regional['ru'] = {
+        closeText: 'Закрыть',
+        prevText: 'Пред',
+        nextText: 'След',
+        currentText: 'Сегодня',
+        monthNames: ['Январь','Февраль','Март','Апрель','Май','Июнь',
+        'Июль','Август','Сентябрь','Октябрь','Ноябрь','Декабрь'],
+        monthNamesShort: ['Янв','Фев','Мар','Апр','Май','Июн',
+        'Июл','Авг','Сен','Окт','Ноя','Дек'],
+        dayNames: ['воскресенье','понедельник','вторник','среда','четверг','пятница','суббота'],
+        dayNamesShort: ['вск','пнд','втр','срд','чтв','птн','сбт'],
+        dayNamesMin: ['Вс','Пн','Вт','Ср','Чт','Пт','Сб'],
+        weekHeader: 'Нед',
+        dateFormat: 'dd.mm.yy',
+        firstDay: 1,
+        isRTL: false,
+        showMonthAfterYear: false,
+        yearSuffix: ''
+      };
+      $.datepicker.setDefaults($.datepicker.regional['ru']);
+      $( "#dt1" ).datepicker({
+          inline: true,
+          language: 'ru',
+          changeYear: true,
+          changeMonth: true,
+          minDate: new Date(1940, 1, 1),
+          maxDate: new Date(),
+          dateFormat: "yy-mm-dd"
+
+      });
+      $( "#dt2" ).datepicker({
+          inline: true,
+          language: 'ru',
+          changeYear: true,
+          changeMonth: true,
+          minDate: new Date(1940, 1, 1),
+          maxDate: new Date(),
+          dateFormat: "yy-mm-dd"
+
+      });
+      $( "#dt3" ).datepicker({
+          inline: true,
+          language: 'ru',
+          changeYear: true,
+          changeMonth: true,
+          minDate: new Date(1940, 1, 1),
+          maxDate: new Date(),
+          dateFormat: "yy-mm-dd"
+
+      });
+      $(".autocomplete").autocomplete({
+        source: [
+            {% for line in params['form'].edoc_organizations_list %}
+              '{{line | safe}}',
+            {% endfor %}
+        ]
+      });
+    } );
+  </script>
+{% endblock %}

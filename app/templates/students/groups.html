@@ -1,0 +1,69 @@
+{% extends 'base.html' %}
+
+
+
+{% block app_content %}
+    
+    {% if alert_message is defined %}
+      <div class="alert alert-warning hide" id="alert"> <a href="#" class="close" data-dismiss="alert">×</a>
+           <h4>Сообщение</h4>
+          <br />
+          <div>{{ alert_message }}  </div>
+      </div>
+    {% endif %}
+
+    <br>
+    <br>
+    <div class="row">
+      <div class="col-1"></div>
+      <div class="col-10">
+        
+        <div align="left">
+          <a href="/students/new">
+            <button class="btn btn-success">
+              <span class="glyphicon glyphicon-plus"></span>
+              Добавить студента
+            </button>
+          </a>
+        </div>
+        <hr />
+
+      	<div align="center">
+       		<h2>Информация о группах</h2>
+   		 </div>
+       {% if params['groups'] is defined %}
+        {% for groupname in params['groups']%}
+          <hr />
+          <h3>Группа {{ groupname }}</h3>
+          <ul>
+            {% for student in params['groups'][groupname] %}
+              <li>
+                <a href="/students/edit/{{student['id']}}">
+                  {{student['lastname']}} {{student['firstname']}} {{student['middlename']}} ({{student['birth_date']}})
+                </a>
+              </li>
+            {% endfor %}
+          </ul>
+        {% endfor %}
+       {% endif %}
+
+      </div>
+      <div class="col-1"></div>
+    </div>
+    <br>
+    <br>
+    <br>
+    
+
+{% endblock %}
+
+{% block footer %}
+  {{ super() }}
+  <script>
+    jQuery(document).ready(function($){
+      window.setTimeout(function () {
+          $("#alert").fadeIn(1000).delay(2000).fadeOut(1000);
+      }, 1000);
+    });
+  </script>
+{% endblock %}

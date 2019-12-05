@@ -1,0 +1,27 @@
+{% extends 'base.html' %}
+
+
+
+{% block app_content %}
+    <br>
+    <br>
+    <div class="row">
+      <div class="col-1"></div>
+      <div class="col-10">
+      	<div align="center">
+       		<h1>Добро пожаловать!</h1>
+   		</div>
+      </div>
+      <div class="col-1"></div>
+    </div>
+    <div class="row">
+      <div class="col-1"></div>
+      <div class="col-10">
+        <br><br>
+        <h3>
+        Вы можете <a href="{{url_for('groups')}}"><button class="btn btn-warning"><h3>посмотреть</h3></button></a> студентов своих групп. Или найти недостающих студентов из <a href="{{url_for('students/all')}}"><button class="btn btn-info"><h3>списка</h3></button></a> всех забитых студентов.
+      </h3>
+      </div>
+      <div class="col-1"></div>
+    </div>
+{% endblock %}

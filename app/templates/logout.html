@@ -1,0 +1,29 @@
+{% extends 'base.html' %}
+
+
+{% block navbar %}
+    <!-- navbar -->
+    <nav class="navbar navbar-expand-lg navbar-light bg-warning" style="color:white;">
+      <a class="navbar-brand" href="/"> Реестр</a>
+
+      <div class="collapse navbar-collapse" id="navbar">
+        <div class="navbar-nav">
+          <a class="nav-item nav-link" href="{{url_for('login')}}"> Войти</a>
+        </div>
+      </div>
+    </nav>
+{% endblock %}
+
+{% block app_content %}
+    <br>
+    <br>
+    <div class="row">
+      <div class="col-1"></div>
+      <div class="col-10">
+      	<div align="center">
+       		<h2>Вы не авторизированы! <br>Просьба пройти <a href="{{url_for('login')}}">авторизацию</a></h2>
+   		</div>
+      </div>
+      <div class="col-1"></div>
+    </div>
+{% endblock %}

@@ -1,0 +1,61 @@
+{% extends 'base.html' %}
+
+
+
+{% block app_content %}
+
+    <br>
+    <br>
+    <div class="row">
+      <div class="col-1"></div>
+      <div class="col-10">
+        
+        <hr />
+      	<div align="center">
+       		<h2>Все внесенные студенты</h2>
+          <h5>(выберите букву из списка)</h5>
+          <div id="menu">
+            {% for letter in params['groups'] %}
+              <b> <a href="#{{ letter }}">{{ letter }}</a> </b>
+            {% endfor %}
+          </div>
+   		 </div>
+
+        {% for letter in params['groups'] %}
+          <hr />
+          <div align="center"><h2 id="{{ letter }}">{{ letter }}</h2></div>
+          <div align="right"><a href="#menu">назад</a></div>
+          <table class="table table-striped">
+            <thead>
+              <tr>
+                <th scope="col">Ф.И.О.</th>
+                <th scope="col">Год рождения</th>
+                <th scope="col">Группа</th>
+              </tr>
+            </thead>
+            <tbody>
+              {% for student in params['groups'][letter] %}
+                <tr>
+                  <td>
+                    <a href="/students/edit/{{student['id']}}">
+                      {{student['lastname']}} {{student['firstname']}} {{student['middlename']}}  
+                    </a>
+                  </td>
+                  <td>{{student['birth_date']}}</td>
+                  <td>{{student['group']}}</td>
+                </tr>
+              {% endfor %}
+            </tbody>
+          </table>
+        {% endfor %}
+       
+
+      </div>
+      <div class="col-1"></div>
+    </div>
+    <br>
+    <br>
+    <br>
+    
+
+{% endblock %}
